@@ -8,33 +8,17 @@ resource "aws_emr_cluster" "cluster" {
   keep_job_flow_alive_when_no_steps = true #Switch on/off run cluster with no steps or when all steps are complete (default is on)
 
 # this configration need edits
-configurations_json = <<EOF
-  [
-    {
-      "Classification": "hadoop-env",
-      "Configurations": [
-        {
-          "Classification": "export",
-          "Properties": {
-            "JAVA_HOME": "/usr/lib/jvm/java-1.8.0"
-          }
-        }
-      ],
-      "Properties": {}
-    },
-    {
-      "Classification": "spark-env",
-      "Configurations": [
-        {
-          "Classification": "export",
-          "Properties": {
-            "JAVA_HOME": "/usr/lib/jvm/java-1.8.0"
-          }
-        }
-      ],
-      "Properties": {}
-    }
-  ]
+  configurations_json = <<EOF
+[
+  {
+    "Classification":"iceberg-defaults",
+    "Properties":{"iceberg.enabled":"true"}
+  },
+  {
+    "Classification": "spark-hive-site",
+    "Properties": {"hive.metastore.client.factory.class": "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactroy"}
+  }
+]
 EOF
 
   ec2_attributes {
@@ -46,7 +30,7 @@ EOF
     instance_profile = var.emr_ec2_instance_profile
   }
 
-  #ebs_root_volume_size = "12"
+  ebs_root_volume_size = "100"
 
   master_instance_group {
     name = "EMR master"
@@ -115,18 +99,17 @@ EOF
   autoscaling_role = var.emr_autoscaling_role
 
   bootstrap_action {
-    path = "s3://bootstrab-master-hadoop-action/bootfile.sh"
-    name = "bootfile.sh"
+    path = "s3://${var.bucket_name}/bootstrap/bootfile.sh"
+    name = "bootfile"
     args = ["instance.isMaster=true", "echo running on master node"]
   }
-
-  depends_on = [ var.subnet_id ]
+  
 }
 
 
-resource "aws_emr_instance_group" "task_instance_group" {
-  name = "task-group"
-  cluster_id = join("", aws_emr_cluster.cluster.*.id)
-  instance_count = 1
-  instance_type = "c5.xlarge"
-}
+# resource "aws_emr_instance_group" "task_instance_group" {
+#   name = "task-group"
+#   cluster_id = join("", aws_emr_cluster.cluster.*.id)
+#   instance_count = 1
+#   instance_type = "c5.xlarge"
+# }

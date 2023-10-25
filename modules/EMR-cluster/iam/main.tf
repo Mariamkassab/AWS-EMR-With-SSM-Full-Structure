@@ -70,6 +70,12 @@ resource "aws_iam_role_policy_attachment" "emr_ec2_instance_profile" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonElasticMapReduceforEC2Role"
 }
 
+resource "aws_iam_role_policy_attachment" "emr_ec2_ssm_agent" {
+  role       = aws_iam_role.emr_ec2_instance_profile.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+
 resource "aws_iam_instance_profile" "emr_ec2_instance_profile" {
   name = aws_iam_role.emr_ec2_instance_profile.name
   role = aws_iam_role.emr_ec2_instance_profile.name

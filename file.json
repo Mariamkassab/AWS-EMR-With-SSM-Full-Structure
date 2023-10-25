@@ -1,0 +1,26 @@
+[
+ {
+   "Classification": "iceberg-defaults",
+   "Configurations": [
+     {
+       "Classification": "export",
+       "Properties": {
+         "iceberg.enabled": "true"
+       }
+     }
+   ],
+   "Properties": {}
+ },
+ {
+   "Classification": "spark-hive-site",
+   "Configurations": [
+     {
+       "Classification": "export",
+       "Properties": {
+         "hive.metastore.client.factory.class": "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactroy"
+       }
+     }
+   ],
+   "Properties": {}
+ }
+]

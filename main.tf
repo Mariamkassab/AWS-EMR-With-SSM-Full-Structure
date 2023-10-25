@@ -53,6 +53,7 @@ module "security-groups" {
 
 module "s3-emr-logs" {
   source           = "./modules/EMR-cluster/s3-emr-logs"
+  bucket_name = var.bucket_name
 }
 
 module "ec2-key-creation" {
@@ -80,4 +81,6 @@ module "emr" {
   emr_ec2_instance_profile  = module.iam.emr_ec2_instance_profile
   emr_service_role          = module.iam.emr_service_role
   emr_autoscaling_role      = module.iam.emr_autoscaling_role
+  bucket_name = var.bucket_name
+  depends_on = [ module.terraform_subnet ]
 }

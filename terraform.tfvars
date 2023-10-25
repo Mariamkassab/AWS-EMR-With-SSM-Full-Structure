@@ -28,18 +28,19 @@ ingress_cidr_blocks = "0.0.0.0/0"  # should change
 
 #emr
 name = "mohan-emr-app"
-release_label = "emr-6.5.0"
-applications = ["Spark", "Hue", "Flink", "Presto"] # , "Trino"
+release_label = "emr-6.14.0"
+applications = ["Spark", "Hue", "Flink", "Trino"] 
 key_name = "vault"
 
 # Master configurations
 master_instance_type = "r5.4xlarge"
-master_ebs_size = "10"
+master_ebs_size = "100"
 
 # Slave configurations
 core_instance_type = "m5.xlarge"
 core_instance_count = 1
-core_ebs_size = "10"
+core_ebs_size = "100"
 
-
+# s3 bucket name 
+bucket_name = "emr-logs-mohan"
 
