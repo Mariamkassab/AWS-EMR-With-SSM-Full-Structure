@@ -30,7 +30,7 @@ ingress_cidr_blocks = "0.0.0.0/0"  # should change
 name = "mohan-emr-app"
 release_label = "emr-6.14.0"
 applications = ["Spark", "Hue", "Flink", "Trino"] 
-key_name = "vault"
+key_name = "ec2-key"
 
 # Master configurations
 master_instance_type = "r5.4xlarge"
