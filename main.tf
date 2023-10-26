@@ -47,7 +47,7 @@ module "iam" {
 
 module "security-groups" {
   source              = "./modules/EMR-cluster/security-groups"
-  vpc_id              = module.terraform_vpc.vpc_id
+  vpc_id              = module.terraform_vpc.vpc_id   # module.vpc_sub_ids.selected-vpc-id
   ingress_cidr_blocks = var.ingress_cidr_blocks
 }
 
@@ -68,7 +68,7 @@ module "emr" {
   release_label             = var.release_label
   applications              = var.applications
   s3_bucket                 = module.s3-emr-logs.s3_uri
-  subnet_id                 = module.terraform_subnet.first_pri_id
+  subnet_id                 = module.terraform_subnet.first_pri_id  # module.vpc_sub_ids.selected-subnet-id
   key_name                  = var.key_name
   service_access_security_group = module.security-groups.service_access_security_group
   master_instance_type      = var.master_instance_type
@@ -82,9 +82,11 @@ module "emr" {
   emr_service_role          = module.iam.emr_service_role
   emr_autoscaling_role      = module.iam.emr_autoscaling_role
   bucket_name = var.bucket_name
-  depends_on = [ module.terraform_subnet , module.terraform_vpc ]
+  depends_on = [ module.private_routing_table , module.public_routing_table ] ## module.vpc_sub_ids
 }
 
+
 # module "vpc_sub_ids" {
-#   source = "./vpc-sub-ids"
+#   source = "./modules/vpc-sub-ids"
 # }
+

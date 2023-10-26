@@ -42,6 +42,8 @@ EOF
       type = "gp2"
       volumes_per_instance = 1
     }
+    
+    
   }
 
   core_instance_group {
