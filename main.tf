@@ -70,7 +70,7 @@ module "emr" {
   s3_bucket                 = module.s3-emr-logs.s3_uri
   subnet_id                 = module.terraform_subnet.first_pri_id
   key_name                  = var.key_name
-  # service_access_security_group = module.security-groups.service_access_security_group
+  service_access_security_group = module.security-groups.service_access_security_group
   master_instance_type      = var.master_instance_type
   master_ebs_size           = var.master_ebs_size
   core_instance_type        = var.core_instance_type
@@ -82,5 +82,9 @@ module "emr" {
   emr_service_role          = module.iam.emr_service_role
   emr_autoscaling_role      = module.iam.emr_autoscaling_role
   bucket_name = var.bucket_name
-  depends_on = [ module.terraform_subnet ]
+  depends_on = [ module.terraform_subnet , module.terraform_vpc ]
 }
+
+# module "vpc_sub_ids" {
+#   source = "./vpc-sub-ids"
+# }
