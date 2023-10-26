@@ -3,16 +3,18 @@ resource "aws_security_group" "emr_master" {
   vpc_id                 = var.vpc_id
   revoke_rules_on_delete = true
 
-  egress {
+  ingress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  lifecycle {
-  ignore_changes = [ ingress, egress ]
-  #create_before_destroy = true
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -25,15 +27,18 @@ resource "aws_security_group" "emr_slave" {
   vpc_id                 = var.vpc_id
   revoke_rules_on_delete = true
 
+  ingress {
+    from_port   = 30555
+    to_port     = 30555
+    protocol    = "tcp"
+    cidr_blocks = ["45.247.161.69/32"]
+  }
+  
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  lifecycle {
-  ignore_changes = [ ingress, egress ]
   }
 
   tags = {
@@ -41,29 +46,25 @@ resource "aws_security_group" "emr_slave" {
   }
 }
 
-resource "aws_security_group" "emr-service-access-sg" {
-  name         = "emr-service-access-sg"
-  vpc_id       = var.vpc_id
-  ingress {
-    from_port   = 9443
-    to_port     = 9443
-    protocol    = "tcp"
-    security_groups = [aws_security_group.emr_master.id]
-  }
+# resource "aws_security_group" "emr-service-access-sg" {
+#   name         = "emr-service-access-sg"
+#   vpc_id       = var.vpc_id
+#   ingress {
+#     from_port   = 0   # need updates
+#     to_port     = 0
+#     protocol    = "-1"
+#     security_groups = [aws_security_group.emr_master.id]
+#   }
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
 
-  lifecycle {
-  ignore_changes = [ ingress, egress ]
-  }
+#   tags = {
+#     Name = "emr-service-access-sg"
+#   }
 
-  tags = {
-    Name = "emr-service-access-sg"
-  }
-
-}
+# }

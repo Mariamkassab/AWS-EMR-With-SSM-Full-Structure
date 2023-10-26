@@ -1,7 +1,7 @@
 variable "name" {}
 variable "subnet_id" {}
 variable "key_name" {}
-variable "service_access_security_group" {}
+# variable "service_access_security_group" {}
 variable "release_label" {}
 variable "applications" {
   type = list
