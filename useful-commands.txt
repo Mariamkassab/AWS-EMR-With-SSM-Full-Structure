@@ -1,0 +1,6 @@
+https://docs.aws.amazon.com/systems-manager/latest/userguide/install-plugin-macos-overview.html
+
+sudo yum install -y https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm
+
+aws ssm start-session \
+    --target instance-id

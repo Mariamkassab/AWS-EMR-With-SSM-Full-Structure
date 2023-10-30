@@ -27,7 +27,7 @@ ingress_cidr_blocks = "0.0.0.0/0"  # should change
 
 
 #emr
-name = "mohan-emr-app"
+name = "emr-instances"
 release_label = "emr-6.14.0"
 applications = ["Spark", "Hue", "Flink", "Trino"] 
 key_name = "ec2-key"
@@ -42,5 +42,5 @@ core_instance_count = 1
 core_ebs_size = "100"
 
 # s3 bucket name 
-bucket_name = "emr-logs-mohan"
+bucket_name = "emr-logs-for-project"
 
