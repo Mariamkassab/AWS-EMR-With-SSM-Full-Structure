@@ -37,7 +37,7 @@ resource "aws_security_group" "emr-service-access-sg" {
   vpc_id       = var.vpc_id
 
   ingress {
-    from_port   = 9443  
+    from_port   = 9443   # need updates
     to_port     = 9443
     protocol    = "tcp"
     security_groups = [aws_security_group.emr_master.id]

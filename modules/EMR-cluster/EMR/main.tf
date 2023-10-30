@@ -106,6 +106,8 @@ EOF
     args = ["instance.isMaster=true", "echo running on master node"]
   }
   
+  
+
 }
 
 
