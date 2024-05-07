@@ -2,7 +2,7 @@
 
 ## Overview
 
-This Terraform project automates the deployment of an AWS EMR (Elastic MapReduce) cluster with integrated AWS Systems Manager (SSM) for centralized management and monitoring. The project aims to simplify the setup process of an EMR cluster while enhancing security and operational efficiency through SSM.
+This Terraform project automates the deployment of an AWS EMR (Elastic MapReduce) cluster with an integrated AWS Systems Manager (SSM) for centralized management and monitoring. The project aims to simplify the setup process of an EMR cluster while enhancing security and operational efficiency through SSM.
 
 ## Features
 
@@ -24,32 +24,70 @@ The project directory structure is as follows:
 
 - `outputs.tf`: Specifies the output values to display after the Terraform apply, including EMR cluster details and SSM association information.
 
-- `ssm_documents/`: Contains SSM document YAML files used for configuration and automation tasks.
-
 - `modules/`: Contains Terraform modules for modularizing the infrastructure configuration.
   
 - `terraform.tfvars`: Contains variable definitions used to customize the Terraform configuration. This file should be created manually and populated with values before running Terraform commands.
 
 - `provider.tf`: Contains the provider configuration for AWS. Specifies the AWS provider version and region.
 
+## Getting Started
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- An AWS account
+- AWS CLI configured with appropriate credentials
+- Terraform installed locally
+- Session-Manager-plugin
+
+Additionally, you need to have your AWS credentials configured either via `~/.aws/credentials` or environment variables.
 
 ## Usage
 
-To use this project:
+1. Clone this repository to your local machine:
 
-1. Ensure you have Terraform installed on your local machine.
+    ```bash
+    git clone https://github.com/Mariamkassab/AWS-EMR-With-SSM-Full-Structure
+    ```
 
-2. Configure your AWS credentials either via `~/.aws/credentials` or environment variables.
+2. Navigate to the cloned directory:
 
-3. Customize the `variables.tf` file to adjust the EMR cluster settings, VPC configuration, and SSM documents according to your requirements.
+    ```bash
+    cd AWS-EMR-With-SSM-Full-Structure
+    ```
 
-4. Run `terraform init` to initialize the Terraform project.
+3. Initialize Terraform:
 
-5. Run `terraform plan` to review the proposed changes.
+    ```bash
+    terraform init
+    ```
 
-6. Run `terraform apply` to apply the Terraform configuration and provision the EMR cluster with SSM integration.
+4. Modify `variables.tf` to set your desired configurations for the EMR cluster.
 
-7. Access the EMR cluster instances through AWS Systems Manager (SSM) Session Manager for management tasks.
+5. Review and modify other Terraform files (`main.tf`, `outputs.tf`, etc.) as needed to match your requirements.
+
+6. Apply the Terraform configuration to create the resources:
+
+    ```bash
+    terraform apply
+    ```
+
+7. After successful creation, access your EMR cluster via the AWS Management Console or CLI:
+    ```bash
+    aws ssm start-session \
+        --target ${instance-id}
+    ```
+
+
+## Clean Up
+
+To avoid incurring charges, it's essential to destroy the resources when they are no longer needed:
+
+```bash
+terraform destroy
+```
+
 
 
 ![image](https://github.com/Mariamkassab/AWS-EMR-With-SSM-Full-Structure/assets/123699968/370ce08e-f2dd-4e57-8dd0-bcabe7bc794b)
