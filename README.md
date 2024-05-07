@@ -30,6 +30,9 @@ The project directory structure is as follows:
   
 - `terraform.tfvars`: Contains variable definitions used to customize the Terraform configuration. This file should be created manually and populated with values before running Terraform commands.
 
+- `provider.tf`: Contains the provider configuration for AWS. Specifies the AWS provider version and region.
+
+
 ## Usage
 
 To use this project:
