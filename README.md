@@ -73,7 +73,8 @@ Additionally, you need to have your AWS credentials configured either via `~/.aw
     terraform apply
     ```
 
-7. After successful creation, access your EMR cluster via the AWS Management Console or CLI:
+7. After successful creation, access your EMR cluster via the SSM with no need to open any ports unlike the SSH:
+
     ```bash
     aws ssm start-session \
         --target ${instance-id}
